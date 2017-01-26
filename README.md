@@ -18,6 +18,9 @@ docker build -t jcorral/sample-web-service:v1 .
 # Get the Docker image ready to download.
 docker push jcorral/sample-web-service:v1
 
+# Create a Kubernetes cluster on AWS
+export KUBERNETES_PROVIDER=aws; curl -sS https://get.k8s.io | bash
+
 # Create a Kubernetes Deployment with the pushed image.
 kubectl create -f k8s-deployment.yaml
 
