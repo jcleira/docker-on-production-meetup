@@ -1,9 +1,13 @@
 #Docker on production - sysadmin@galicia meetup
+![Meetup logos](http://i.imgur.com/2MeSFWS.png)
 
 This repository contains the assets used on the ["Docker in production" sysadmin@galicia](https://www.meetup.com/es-ES/Sysadmin-Galicia/events/235823265/) meetup on 26/01/2017.
 
-The live demo on the meetup consists on a serie of compile, build & operate examples of GOlang web services deployed using Docker images on a Kubernetes Raspberry PI cluster.
-Here is the command list used during the demo:
+During the meetup we performed a live demo about how-to compile, build, deploy and operate a simple GO web service on a Raspberry PI Kubernetes cluster, the repo root contains the service code `service.go` the `Dockerfile` and the Kubernetes deployment and service configuration files `k8s-deployment.yaml` and `k8s-service.yaml` that we used on the live demo.
+
+The non live demo slides can be found [here](https://docs.google.com/presentation/d/1zFVJMEyPL05P9EGfQ53MMPbePEMSU34JUCFp8929ZMY/pub?start=false&loop=false&delayms=10000&slide=id.g35f391192_00).
+
+Commands used to create the GO arm executable.
 
 ```bash
 # Build the service to be shown on a browser.
@@ -11,16 +15,21 @@ go build -o service .
 
 # Build the service deployable on the Kubernetes PI cluster by using the arm ARCH.
 GOARCH=arm go build -o service .
+```
 
+Commands used to build and publish the docker image.
+
+```bash
 # Create the deployable Docker image.
 docker build -t jcorral/sample-web-service:v1 .
 
 # Get the Docker image ready to download.
 docker push jcorral/sample-web-service:v1
+```
 
-# Create a Kubernetes cluster on AWS
-export KUBERNETES_PROVIDER=aws; curl -sS https://get.k8s.io | bash
+Commands used to deploy and operate the service on the Kubernetes Cluster. 
 
+```bash
 # Create a Kubernetes Deployment with the pushed image.
 kubectl create -f k8s-deployment.yaml
 
